@@ -1,0 +1,48 @@
+ion-content {
+    --background: url('/assets/icon/fin.webp') no-repeat center center / cover;
+    background: transparent;
+    overflow: hidden;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 24px;
+}
+
+.custom-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 240px;
+    height: 300px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    padding: 20px;
+}
+
+.custom-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.button-img {
+    width: 180px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.button-text {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 8px;
+}

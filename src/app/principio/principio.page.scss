@@ -1,0 +1,40 @@
+.page-home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #7f00ff, #e100ff);
+    color: white;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+  
+    h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    }
+  
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+  
+    ion-button {
+      --background: linear-gradient(90deg, #ff6a00, #ee0979);
+      --background-activated: #d40060;
+      --color: white;
+      font-size: 1.2rem;
+      padding: 1rem 2rem;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s;
+  
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+  

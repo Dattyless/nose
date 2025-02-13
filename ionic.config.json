@@ -1,0 +1,7 @@
+{
+  "name": "juego-reconstruir",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

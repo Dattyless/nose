@@ -1,0 +1,178 @@
+.contenedor-principal { 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  height: 100%;
+}
+
+.contenido {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.monstruo-container {
+  flex: 0.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.monstruo-container img {
+  width: 220px;
+  height: auto;
+  animation: shake 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes shake {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+/* Nueva barra de daño debajo del monstruo */
+.barra-dano-container {
+  width: 100%;
+  max-width: 220px;
+  margin-top: 10px;
+}
+
+.barra-dano {
+  background-color: #661313;
+  border-radius: 8px;
+  height: 20px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.barra-progreso {
+  height: 100%;
+  background: linear-gradient(90deg, #ff0000, #b30000);
+  transition: width 0.3s ease;
+}
+
+.barra-dano-container p {
+  font-size: 1.2rem;
+  color: white;
+  margin-top: 5px;
+}
+
+.pregunta-container {
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 3.5rem; 
+  font-weight: bold; 
+  color: #ffcc00; 
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
+  margin: 0 10px;
+  text-transform: uppercase;
+}
+
+.opciones-container {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+  margin-right: 8%;
+}
+
+.opcion-item {
+  --background: black;
+  color: white; 
+  margin: 8px 0;
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.opcion-item:hover {
+  transform: scale(1.05);
+  background: #ffcc00;
+  color: black;
+}
+
+ion-label {
+  color: white;
+}
+
+ion-radio {
+  --color: white; 
+}
+
+p {
+  font-size: 1.4rem;
+  color: #ffffff;
+  background-color: #000000;
+  padding: 5px 15px;
+  border-radius: 10px;
+}
+
+.boton-container {
+  width: 100%;
+  max-width: 300px;
+  margin-top: 20px;
+}
+
+.boton-bonito {
+  --border-radius: 12px;
+  font-size: 1.2rem;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --background: linear-gradient(45deg, #ff5722, #ff9800);
+  --color: white;
+  --transition: all 0.3s ease;
+}
+
+.boton-bonito:hover {
+  --box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+  --background: linear-gradient(45deg, #ff9800, #ff5722);
+}
+
+.estado-juego {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.estado-juego p {
+  margin: 5px 0;
+}
+
+#fondo {
+  --background: url('/assets/icon/zombie.jpg') no-repeat center center / cover;
+}
+
+img {
+  margin-right: 80%;
+}
+
+.barra-dano-container {
+  margin-right: 80%;
+  margin-bottom: 30%;
+}
+
+.log-out-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  --background: linear-gradient(45deg, #ff0000, #ff0000);
+  --color: white;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.log-out-btn:hover {
+  --box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+  --background: linear-gradient(45deg, #ff9800, #ff5722);
+}
+

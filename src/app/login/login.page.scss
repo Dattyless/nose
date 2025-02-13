@@ -1,0 +1,23 @@
+.custom-button {
+    --background: linear-gradient(45deg, #ff6b6b, #f7a8b8); /* Gradiente suave */
+    --border-radius: 50px; /* Bordes redondeados */
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    --color: white; /* Texto blanco */
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 30px;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out; /* Transición suave */
+  }
+  
+  .custom-button:hover {
+    --background: linear-gradient(45deg, #f7a8b8, #ff6b6b); /* Invertir gradiente al pasar el mouse */
+    --transform: scale(1.05); /* Aumentar un poco de tamaño */
+    --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa al hacer hover */
+  }
+  
+  .custom-button:active {
+    --transform: scale(1);
+    --box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* Reducir sombra al hacer clic */
+  }
+  
