@@ -49,7 +49,7 @@ export class FacilPage implements OnInit {
       console.log('Preguntas cargadas:', this.preguntas);
       this.iniciarJuego();
     }, (error) => {
-      console.error('Error al obtener preguntas:', error);
+      console.error('error al obtener preguntas:', error);
     });
   }
 
