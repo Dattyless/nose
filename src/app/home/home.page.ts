@@ -24,26 +24,40 @@ export class HomePage implements OnInit {
   constructor(private auth: AuthService, private navCtrl: NavController, private http: HttpClient, private router: Router) { }
   db_user: any;
   public user: any;
-  public url: string = 'http://localhost:3000';
+  public url: string = 'https://back-d2w7.onrender.com';
   public usuario: any
 
-  ngOnInit() {  
-    this.auth.user$.subscribe((data) =>{
+  ngOnInit() {
+    this.auth.user$.subscribe(data => {
       this.user = data
-      console.log(this.user)
-      const Data = {
-        id: this.user.email,
-        nombre: this.user.name,
-      }
-      this.http.post(`${this.url}/usuarios`, Data).subscribe((response) => {
-        console.log("Cargando o creando datos"); 
-        console.log(response);
-      this.usuario = response
-      console.log(this.usuario.id)
-      });
+      console.log('user', this.user);
 
-    });
-  }
+      this.loadUser()
+        // createUser();
+      });
+    }
+
+    loadUser() {
+      this.http.get('https://prijecto-final-back-2.onrender.com/users/' + this.user.email).subscribe((response:any) => {
+        console.log( response);
+        console.log(this.user.email);
+        if(response == "not found"){
+          this.createUser();
+        }
+      }); 
+    }
+
+    createUser() {
+
+      let new_user = {
+        email: this.user.email,
+        name: this.user.name
+      }
+
+      this.http.post('https://prijecto-final-back-2.onrender.com/add_user', new_user).subscribe((response) => {
+        console.log(response);
+      });
+    }
   enter() {
     console.log('Entrando a contenido');
     this.router.navigate(['/dificultad']);

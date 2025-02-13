@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonHeader, IonToolbar, IonTitle,
-  IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
-  IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonButton, IonRadioGroup, IonRadio, IonItem } from '@ionic/angular/standalone';
-  import { FormsModule } from '@angular/forms';
+import { IonContent, IonHeader, IonToolbar, IonTitle, IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet, IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonButton, IonRadioGroup, IonRadio, IonItem } from '@ionic/angular/standalone';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
@@ -13,9 +11,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './preguntas.page.html',
   styleUrls: ['./preguntas.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonToolbar, IonTitle,
-    IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
-    IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonButton, IonRadioGroup, IonRadio, IonItem, FormsModule, CommonModule]
+  imports: [IonContent, IonHeader, IonToolbar, IonTitle, IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet, IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonButton, IonRadioGroup, IonRadio, IonItem, FormsModule, CommonModule]
 })
 export class PreguntasPage implements OnInit {
   private preguntas: any[] = [];
@@ -36,15 +32,18 @@ export class PreguntasPage implements OnInit {
   }
 
   iniciarJuego() {
+    console.log("Juego iniciado");
     this.vidasRestantes = 3;
     this.preguntasUsadas.clear();
     this.seleccion = '';
+    this.progreso = 0;
+    this.progresoVisual = 7;
     localStorage.removeItem('estadoJuego');
     this.obtenerNuevaPregunta();
   }
 
   obtenerPreguntas() {
-    this.http.get<any[]>('https://back-d2w7.onrender.com/preguntas_medio').subscribe((response) => {
+    this.http.get<any[]>('https://back-d2w7.onrender.com/preguntas_medias').subscribe((response) => {
       this.preguntas = response;
       console.log('Preguntas cargadas:', this.preguntas);
       this.iniciarJuego();
@@ -55,6 +54,7 @@ export class PreguntasPage implements OnInit {
 
   obtenerNuevaPregunta() {
     if (this.preguntasUsadas.size >= this.preguntas.length) {
+      console.log("Juego ganado");
       this.router.navigate(['/gamewon']);
       return;
     }
@@ -74,11 +74,20 @@ export class PreguntasPage implements OnInit {
       this.preguntaActual.opcion4,
     ];
 
+    console.log("Nueva pregunta:", this.preguntaActual);
     this.seleccion = '';
   }
 
   async responder() {
-    const esCorrecto = this.seleccion === this.preguntaActual.respuesta_correcta;
+    console.log("Respuesta seleccionada:", this.seleccion);
+    console.log("Respuesta correcta:", this.preguntaActual.respuesta_correcta);
+
+    if (!this.seleccion) {
+      console.warn("No se seleccionó ninguna respuesta.");
+      return;
+    }
+
+    const esCorrecto = this.seleccion.toString().trim() === this.preguntaActual.respuesta_correcta.toString().trim();
 
     if (esCorrecto) {
       this.progreso++;
@@ -92,22 +101,27 @@ export class PreguntasPage implements OnInit {
     await this.mostrarMensaje(esCorrecto ? '¡Correcto!' : '¡Incorrecto!');
 
     if (this.progreso >= 7) {
+      console.log("Juego ganado, navegando a /gamewon");
       await this.router.navigate(['/gamewon']);
       return;
     }
 
     if (this.vidasRestantes === 0) {
+      console.log("Juego perdido, navegando a /gameover");
       await this.router.navigate(['/gameover']);
       return;
     }
 
-    this.obtenerNuevaPregunta();
+    setTimeout(() => {
+      console.log("Cargando nueva pregunta...");
+      this.obtenerNuevaPregunta();
+    }, 500);
   }
 
   async mostrarMensaje(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,
-      duration: 2000,
+      duration: 1000,
       position: 'top',
     });
     toast.present();

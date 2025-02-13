@@ -44,7 +44,7 @@ export class FacilPage implements OnInit {
   }
 
   obtenerPreguntas() {
-    this.http.get<any[]>('https://back-d2w7.onrender.com/preguntas_facil').subscribe((response) => {
+    this.http.get<any[]>('https://back-d2w7.onrender.com/preguntas_faciles').subscribe((response) => {
       this.preguntas = response;
       console.log('Preguntas cargadas:', this.preguntas);
       this.iniciarJuego();
