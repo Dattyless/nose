@@ -61,7 +61,7 @@ export class DificilPage implements OnInit {
   }
 
   obtenerPreguntas() {
-    this.http.get<any[]>('http://localhost:3000/preguntas_imposible').subscribe(
+    this.http.get<any[]>('https://back-d2w7.onrender.com/preguntas_imposible').subscribe(
       (response) => {
         this.preguntas = response;
         this.iniciarJuego();

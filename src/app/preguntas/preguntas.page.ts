@@ -44,7 +44,7 @@ export class PreguntasPage implements OnInit {
   }
 
   obtenerPreguntas() {
-    this.http.get<any[]>('http://localhost:3000/preguntas_medio').subscribe((response) => {
+    this.http.get<any[]>('https://back-d2w7.onrender.com/preguntas_medio').subscribe((response) => {
       this.preguntas = response;
       console.log('Preguntas cargadas:', this.preguntas);
       this.iniciarJuego();
