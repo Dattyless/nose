@@ -1,18 +1,23 @@
 <ion-content id="fondo">
   <div class="contenedor-principal">
     <div class="contenido">
-      <div *ngIf="preguntaActual?.texto" class="pregunta-container">
-        <h2><p>{{ preguntaActual.texto }}</p></h2>
-      </div>
 
-      <div *ngIf="preguntaActual?.opciones" class="opciones-container">
-        <ion-radio-group [(ngModel)]="seleccion">
-          <ion-item *ngFor="let opcion of preguntaActual.opciones" class="opcion-item">
-            <ion-label>{{ opcion }}</ion-label>
-            <ion-radio slot="start" [value]="opcion"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-      </div>
+      @if (preguntaActual?.texto) {
+        <div class="pregunta-container">
+          <h2><p>{{ preguntaActual.texto }}</p></h2>
+        </div>
+      }
+
+      @if (preguntaActual?.opciones && preguntaActual.opciones.length > 0) {
+        <div class="opciones-container">
+          <ion-radio-group [(ngModel)]="seleccion">
+            <ion-item *ngFor="let opcion of preguntaActual.opciones; trackBy: trackOpcion">
+              <ion-label>{{ opcion }}</ion-label>
+              <ion-radio slot="start" [value]="opcion"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </div>
+      }
 
       <div class="boton-container">
         <ion-button class="boton-bonito" expand="block" color="primary" (click)="responder()" [disabled]="!seleccion">
@@ -34,5 +39,6 @@
       </div>
     </div>
   </div>
-  <ion-button class="log-out-btn" (click)="logout()">Log out</ion-button> 
+
+  <ion-button class="log-out-btn" (click)="logout()">Log out</ion-button>
 </ion-content>

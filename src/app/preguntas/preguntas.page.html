@@ -1,19 +1,25 @@
 <ion-content id="fondo">
   <div class="contenedor-principal">
     <div class="contenido">
-      <div *ngIf="preguntaActual?.texto" class="pregunta-container">
-        <h2><p>{{ preguntaActual.texto }}</p></h2>
-      </div>
+      @if (preguntaActual?.texto) {
+        <div class="pregunta-container">
+          <h2><p>{{ preguntaActual.texto }}</p></h2>
+        </div>
+      }
 
-      <div *ngIf="preguntaActual?.opciones" class="opciones-container">
-        <ion-radio-group [(ngModel)]="seleccion">
-          <ion-item *ngFor="let opcion of preguntaActual.opciones" class="opcion-item">
-            <ion-label>{{ opcion }}</ion-label>
-            <ion-radio slot="start" [value]="opcion"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-      </div>
-
+      @if (preguntaActual?.opciones) {
+        <div class="opciones-container">
+          <ion-radio-group [(ngModel)]="seleccion">
+            @for (opcion of preguntaActual.opciones; track opcion) {
+              <ion-item class="opcion-item">
+                <ion-label>{{ opcion }}</ion-label>
+                <ion-radio slot="start" [value]="opcion"></ion-radio>
+              </ion-item>
+            }
+          </ion-radio-group>
+        </div>
+      }
+      
       <div class="boton-container">
         <ion-button class="boton-bonito" expand="block" color="primary" (click)="responder()" [disabled]="!seleccion">
           RESPONDER
@@ -29,10 +35,11 @@
       <img src="/assets/icon/alexis.png" alt="monstruo">
       <div class="barra-dano-container">
         <div class="barra-dano">
-          <div class="barra-progreso" [style.width]="((progresoVisual / 7) * 100) + '%'"></div>
+          <div class="barra-progreso" [style.width]="((progresoVisual / 5) * 100) + '%'"></div>
         </div>
       </div>
     </div>
   </div>
+
   <ion-button class="log-out-btn" (click)="logout()">Log out</ion-button> 
 </ion-content>
