@@ -74,19 +74,22 @@ export class PreguntasPage implements OnInit {
       this.preguntaActual.opcion4,
     ];
 
-    console.log("Nueva pregunta:", this.preguntaActual);
-    this.seleccion = '';
+    console.log("Nueva pregunta asignada:", this.preguntaActual);
+
+    // Asegurar que la selección se limpia en la UI
+    setTimeout(() => {
+      this.seleccion = '';
+    }, 0);
   }
 
   async responder() {
     console.log("Respuesta seleccionada:", this.seleccion);
-    console.log("Respuesta correcta:", this.preguntaActual.respuesta_correcta);
-
     if (!this.seleccion) {
       console.warn("No se seleccionó ninguna respuesta.");
       return;
     }
 
+    console.log("Respuesta correcta:", this.preguntaActual.respuesta_correcta);
     const esCorrecto = this.seleccion.toString().trim() === this.preguntaActual.respuesta_correcta.toString().trim();
 
     if (esCorrecto) {
@@ -112,6 +115,7 @@ export class PreguntasPage implements OnInit {
       return;
     }
 
+    // Esperar un poco antes de cargar la nueva pregunta
     setTimeout(() => {
       console.log("Cargando nueva pregunta...");
       this.obtenerNuevaPregunta();
