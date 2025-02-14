@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent, IonHeader, IonToolbar, IonTitle, IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet, IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonButton, IonRadioGroup, IonRadio, IonItem } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '@auth0/auth0-angular';
+
 
 @Component({
   selector: 'app-preguntas',
@@ -25,8 +27,11 @@ export class PreguntasPage implements OnInit {
   private sonidoCorrecto = new Audio('/assets/sounds/correcto.mp3');
   private sonidoIncorrecto = new Audio('/assets/sounds/incorrecto.mp3');
 
-  constructor(private router: Router, private toastController: ToastController, private http: HttpClient) {}
-
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private router: Router,
+    private toastController: ToastController, 
+    private http: HttpClient) {}
   ngOnInit() {
     this.obtenerPreguntas();
   }
@@ -65,7 +70,7 @@ export class PreguntasPage implements OnInit {
     } while (this.preguntasUsadas.has(indice));
 
     this.preguntasUsadas.add(indice);
-    this.preguntaActual = this.preguntas[indice];
+    this.preguntaActual = { ...this.preguntas[indice] }; // Clonamos el objeto para forzar cambio en Angular
 
     this.preguntaActual.opciones = [
       this.preguntaActual.opcion1,
@@ -76,10 +81,10 @@ export class PreguntasPage implements OnInit {
 
     console.log("Nueva pregunta asignada:", this.preguntaActual);
 
-    // Asegurar que la selección se limpia en la UI
+    // Resetear la selección con un delay para asegurar que la UI se actualiza
     setTimeout(() => {
       this.seleccion = '';
-    }, 0);
+    }, 100);
   }
 
   async responder() {
@@ -94,10 +99,10 @@ export class PreguntasPage implements OnInit {
 
     if (esCorrecto) {
       this.progreso++;
-      this.progresoVisual--;
+      this.progresoVisual--; // Reduce la vida del monstruo
       this.sonidoCorrecto.play();
     } else {
-      this.vidasRestantes--;
+      this.vidasRestantes--; // Reduce la vida del jugador
       this.sonidoIncorrecto.play();
     }
 
@@ -115,11 +120,11 @@ export class PreguntasPage implements OnInit {
       return;
     }
 
-    // Esperar un poco antes de cargar la nueva pregunta
+    // Esperar 1 segundo antes de cargar la nueva pregunta
     setTimeout(() => {
       console.log("Cargando nueva pregunta...");
       this.obtenerNuevaPregunta();
-    }, 500);
+    }, 1000);
   }
 
   async mostrarMensaje(mensaje: string) {

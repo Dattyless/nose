@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent, IonHeader, IonToolbar, IonTitle,
   IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
   IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonButton, IonRadioGroup, IonRadio, IonItem } from '@ionic/angular/standalone';
   import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '@auth0/auth0-angular';
+
 
 @Component({
   selector: 'app-facil',
@@ -29,16 +31,22 @@ export class FacilPage implements OnInit {
   private sonidoCorrecto = new Audio('/assets/sounds/correcto.mp3');
   private sonidoIncorrecto = new Audio('/assets/sounds/incorrecto.mp3');
 
-  constructor(private router: Router, private toastController: ToastController, private http: HttpClient) {}
-
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private router: Router,
+    private toastController: ToastController, 
+    private http: HttpClient) {}
   ngOnInit() {
     this.obtenerPreguntas();
   }
 
   iniciarJuego() {
+    console.log("Juego iniciado");
     this.vidasRestantes = 3;
     this.preguntasUsadas.clear();
     this.seleccion = '';
+    this.progreso = 0;
+    this.progresoVisual = 7;
     localStorage.removeItem('estadoJuego');
     this.obtenerNuevaPregunta();
   }
@@ -49,12 +57,13 @@ export class FacilPage implements OnInit {
       console.log('Preguntas cargadas:', this.preguntas);
       this.iniciarJuego();
     }, (error) => {
-      console.error('error al obtener preguntas:', error);
+      console.error('Error al obtener preguntas:', error);
     });
   }
 
   obtenerNuevaPregunta() {
     if (this.preguntasUsadas.size >= this.preguntas.length) {
+      console.log("Juego ganado");
       this.router.navigate(['/gamewon']);
       return;
     }
@@ -65,7 +74,7 @@ export class FacilPage implements OnInit {
     } while (this.preguntasUsadas.has(indice));
 
     this.preguntasUsadas.add(indice);
-    this.preguntaActual = this.preguntas[indice];
+    this.preguntaActual = { ...this.preguntas[indice] }; // Clonamos el objeto para forzar cambio en Angular
 
     this.preguntaActual.opciones = [
       this.preguntaActual.opcion1,
@@ -74,40 +83,58 @@ export class FacilPage implements OnInit {
       this.preguntaActual.opcion4,
     ];
 
-    this.seleccion = '';
+    console.log("Nueva pregunta asignada:", this.preguntaActual);
+
+    // Resetear la selección con un delay para asegurar que la UI se actualiza
+    setTimeout(() => {
+      this.seleccion = '';
+    }, 100);
   }
 
   async responder() {
-    const esCorrecto = this.seleccion === this.preguntaActual.respuesta_correcta;
+    console.log("Respuesta seleccionada:", this.seleccion);
+    if (!this.seleccion) {
+      console.warn("No se seleccionó ninguna respuesta.");
+      return;
+    }
+
+    console.log("Respuesta correcta:", this.preguntaActual.respuesta_correcta);
+    const esCorrecto = this.seleccion.toString().trim() === this.preguntaActual.respuesta_correcta.toString().trim();
 
     if (esCorrecto) {
       this.progreso++;
-      this.progresoVisual--;
+      this.progresoVisual--; // Reduce la vida del monstruo
       this.sonidoCorrecto.play();
     } else {
-      this.vidasRestantes--;
+      this.vidasRestantes--; // Reduce la vida del jugador
       this.sonidoIncorrecto.play();
     }
 
     await this.mostrarMensaje(esCorrecto ? '¡Correcto!' : '¡Incorrecto!');
 
     if (this.progreso >= 7) {
+      console.log("Juego ganado, navegando a /gamewon");
       await this.router.navigate(['/gamewon']);
       return;
     }
 
     if (this.vidasRestantes === 0) {
+      console.log("Juego perdido, navegando a /gameover");
       await this.router.navigate(['/gameover']);
       return;
     }
 
-    this.obtenerNuevaPregunta();
+    // Esperar 1 segundo antes de cargar la nueva pregunta
+    setTimeout(() => {
+      console.log("Cargando nueva pregunta...");
+      this.obtenerNuevaPregunta();
+    }, 1000);
   }
 
   async mostrarMensaje(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,
-      duration: 2000,
+      duration: 1000,
       position: 'top',
     });
     toast.present();

@@ -23,7 +23,7 @@ export class DificilPage implements OnInit {
   preguntaActual: any = null;
   seleccion = '';
   progreso = 0;
-  progresoVisual = 5;
+  progresoVisual = 7;
   vidasRestantes = 3;
   preguntasUsadas = new Set<number>();
 
@@ -31,49 +31,39 @@ export class DificilPage implements OnInit {
   private sonidoIncorrecto = new Audio('/assets/sounds/incorrecto.mp3');
 
   constructor(
-    @Inject(DOCUMENT) private document: Document, 
-    private auth: AuthService,
-    private router: Router,
-    private toastController: ToastController,
-    private http: HttpClient
-  ) {}
+  @Inject(DOCUMENT) private document: Document,
+  private router: Router,
+  private toastController: ToastController, 
+  private http: HttpClient) {}
 
   ngOnInit() {
     this.obtenerPreguntas();
   }
 
-  logout() {
-    this.auth.logout({
-      logoutParams: { 
-        returnTo: this.document.location.origin 
-      }
-    });
-  }
-
   iniciarJuego() {
+    console.log("Juego iniciado");
     this.vidasRestantes = 3;
-    this.progreso = 0;
-    this.progresoVisual = 5;
     this.preguntasUsadas.clear();
     this.seleccion = '';
+    this.progreso = 0;
+    this.progresoVisual = 7;
     localStorage.removeItem('estadoJuego');
     this.obtenerNuevaPregunta();
   }
 
   obtenerPreguntas() {
-    this.http.get<any[]>('https://back-d2w7.onrender.com/preguntas_imposibles').subscribe(
-      (response) => {
-        this.preguntas = response;
-        this.iniciarJuego();
-      },
-      (error) => {
-        console.error('Error al obtener preguntas:', error);
-      }
-    );
+    this.http.get<any[]>('https://back-d2w7.onrender.com/preguntas_imposibles').subscribe((response) => {
+      this.preguntas = response;
+      console.log('Preguntas cargadas:', this.preguntas);
+      this.iniciarJuego();
+    }, (error) => {
+      console.error('Error al obtener preguntas:', error);
+    });
   }
 
   obtenerNuevaPregunta() {
     if (this.preguntasUsadas.size >= this.preguntas.length) {
+      console.log("Juego ganado");
       this.router.navigate(['/gamewon']);
       return;
     }
@@ -84,61 +74,69 @@ export class DificilPage implements OnInit {
     } while (this.preguntasUsadas.has(indice));
 
     this.preguntasUsadas.add(indice);
-    this.preguntaActual = this.preguntas[indice];
+    this.preguntaActual = { ...this.preguntas[indice] }; // Clonamos el objeto para forzar cambio en Angular
 
-    this.preguntaActual.opciones = this.mezclarArray([
+    this.preguntaActual.opciones = [
       this.preguntaActual.opcion1,
       this.preguntaActual.opcion2,
       this.preguntaActual.opcion3,
       this.preguntaActual.opcion4,
-    ]);
+    ];
 
-    this.seleccion = '';
-  }
+    console.log("Nueva pregunta asignada:", this.preguntaActual);
 
-  mezclarArray(array: any[]) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+    // Resetear la selección con un delay para asegurar que la UI se actualiza
+    setTimeout(() => {
+      this.seleccion = '';
+    }, 100);
   }
 
   async responder() {
-    const esCorrecto = this.seleccion === this.preguntaActual.respuesta_correcta;
+    console.log("Respuesta seleccionada:", this.seleccion);
+    if (!this.seleccion) {
+      console.warn("No se seleccionó ninguna respuesta.");
+      return;
+    }
+
+    console.log("Respuesta correcta:", this.preguntaActual.respuesta_correcta);
+    const esCorrecto = this.seleccion.toString().trim() === this.preguntaActual.respuesta_correcta.toString().trim();
 
     if (esCorrecto) {
       this.progreso++;
-      this.progresoVisual--;
+      this.progresoVisual--; // Reduce la vida del monstruo
       this.sonidoCorrecto.play();
     } else {
-      this.vidasRestantes--;
+      this.vidasRestantes--; // Reduce la vida del jugador
       this.sonidoIncorrecto.play();
     }
 
     await this.mostrarMensaje(esCorrecto ? '¡Correcto!' : '¡Incorrecto!');
 
-    if (this.progreso >= 5) {
+    if (this.progreso >= 7) {
+      console.log("Juego ganado, navegando a /gamewon");
       await this.router.navigate(['/gamewon']);
       return;
     }
 
     if (this.vidasRestantes === 0) {
+      console.log("Juego perdido, navegando a /gameover");
       await this.router.navigate(['/gameover']);
       return;
     }
 
-    this.obtenerNuevaPregunta();
+    // Esperar 1 segundo antes de cargar la nueva pregunta
+    setTimeout(() => {
+      console.log("Cargando nueva pregunta...");
+      this.obtenerNuevaPregunta();
+    }, 1000);
   }
 
   async mostrarMensaje(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,
-      duration: 2000,
+      duration: 1000,
       position: 'top',
     });
     toast.present();
   }
-
-
 }
