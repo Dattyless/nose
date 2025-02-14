@@ -31,9 +31,20 @@ export class PreguntasPage implements OnInit {
     @Inject(DOCUMENT) private document: Document,
     private router: Router,
     private toastController: ToastController, 
-    private http: HttpClient) {}
+    private http: HttpClient,
+    private auth: AuthService
+  ) {}
+
   ngOnInit() {
     this.obtenerPreguntas();
+  }
+
+  logout() {
+    this.auth.logout({
+      logoutParams: { 
+        returnTo: this.document.location.origin 
+      }
+    });
   }
 
   iniciarJuego() {
@@ -70,7 +81,7 @@ export class PreguntasPage implements OnInit {
     } while (this.preguntasUsadas.has(indice));
 
     this.preguntasUsadas.add(indice);
-    this.preguntaActual = { ...this.preguntas[indice] }; // Clonamos el objeto para forzar cambio en Angular
+    this.preguntaActual = { ...this.preguntas[indice] };
 
     this.preguntaActual.opciones = [
       this.preguntaActual.opcion1,
@@ -81,7 +92,6 @@ export class PreguntasPage implements OnInit {
 
     console.log("Nueva pregunta asignada:", this.preguntaActual);
 
-    // Resetear la selección con un delay para asegurar que la UI se actualiza
     setTimeout(() => {
       this.seleccion = '';
     }, 100);
@@ -99,10 +109,10 @@ export class PreguntasPage implements OnInit {
 
     if (esCorrecto) {
       this.progreso++;
-      this.progresoVisual--; // Reduce la vida del monstruo
+      this.progresoVisual--;
       this.sonidoCorrecto.play();
     } else {
-      this.vidasRestantes--; // Reduce la vida del jugador
+      this.vidasRestantes--;
       this.sonidoIncorrecto.play();
     }
 
@@ -120,7 +130,6 @@ export class PreguntasPage implements OnInit {
       return;
     }
 
-    // Esperar 1 segundo antes de cargar la nueva pregunta
     setTimeout(() => {
       console.log("Cargando nueva pregunta...");
       this.obtenerNuevaPregunta();
