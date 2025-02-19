@@ -13,6 +13,8 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 .ranking-item {
@@ -42,19 +44,19 @@
     font-weight: bold;
     border-radius: 50px;
     padding: 12px 25px;
-    background: linear-gradient(45deg, #FF7A00, #FF3E00); /* Un bonito gradiente naranja */
+    background: linear-gradient(45deg, #020a79, #054a72); /* Un bonito gradiente naranja */
     color: white;
     text-transform: uppercase;
     border: none;
     cursor: pointer;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
     transition: background 0.3s, transform 0.3s;
-    margin-left: 30%;
-    margin-right: 30%;
+    margin-left: 40%;
+    margin-right: 40%;
 }
 
 .ranking-button:hover {
-    background: linear-gradient(45deg, #FF3E00, #FF7A00); /* Gradiente inverso en hover */
+    background: linear-gradient(45deg, #0b7ad4, #090772); /* Gradiente inverso en hover */
     transform: scale(1.05); /* Le da un efecto de agrandarse */
 }
 

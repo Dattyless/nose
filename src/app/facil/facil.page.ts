@@ -24,13 +24,14 @@ export class FacilPage implements OnInit {
   public preguntaActual: any = null;
   public seleccion = '';
   public progreso = 0;
-  public progresoVisual = 7;
-  public vidasRestantes = 3;
+  public progresoVisual = 5;
+  public vidasRestantes = 2;
   public preguntasUsadas = new Set<number>();
   public user: any;
   private sonidoCorrecto = new Audio('/assets/sounds/correcto.mp3');
   private sonidoIncorrecto = new Audio('/assets/sounds/incorrecto.mp3');
   private sonidoWin = new Audio('/assets/sounds/win.mp3');
+  public imagenFacil = "/assets/icon/monstruo.png";
 
   
   constructor(

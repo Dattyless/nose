@@ -24,7 +24,7 @@ export class DificultadPage implements OnInit {
 
   facilClick() {
     console.log("Dificultad fácil");
-    this.router.navigate(['/preguntas']);
+    this.router.navigate(['/facil']);
   }
 
   mediaClick() {

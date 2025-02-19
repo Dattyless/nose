@@ -38,7 +38,7 @@
 
     <!-- Monstruo y barra de progreso -->
     <div class="monstruo-container">
-      <img src="/assets/icon/alexis.png" alt="monstruo">
+      <img [src]="imagenDificil" alt="monstruo">
       <div class="barra-dano-container">
         <div class="barra-dano">
           <div class="barra-progreso" [style.width]="((progresoVisual / 5) * 100) + '%'" ></div>

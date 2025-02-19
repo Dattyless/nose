@@ -38,7 +38,7 @@
 
     <!-- Monstruo y barra de progreso -->
     <div class="monstruo-container">
-      <img src="/assets/icon/monstruo.png" alt="monstruo">
+      <img [src]="imagenFacil" alt="monstruo">
       <div class="barra-dano-container">
         <div class="barra-dano">
           <div class="barra-progreso" [style.width]="((progresoVisual / 5) * 100) + '%'" ></div>
@@ -46,7 +46,6 @@
       </div>
     </div>
   </div>
-
 
   <!-- Botón de cerrar sesión -->
   <ion-button class="log-out-btn" (click)="logout()">Log out</ion-button>
