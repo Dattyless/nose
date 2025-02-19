@@ -1,40 +1,39 @@
 .page-gameover {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #ff4b1f, #ff9068);
-    color: white;
-    text-align: center;
-    font-family: 'Montserrat', sans-serif;
-  
-    h1 {
-      font-size: 3rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
-    }
-  
-    p {
-      font-size: 1.3rem;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
-  
-    ion-button {
-      --background: linear-gradient(90deg, #ff5722, #ff8a50);
-      --background-activated: #d84315;
-      --color: white;
-      font-size: 1.2rem;
-      padding: 1rem 2.5rem;
-      border-radius: 30px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-      transition: transform 0.3s;
-  
-      &:hover {
-        transform: translateY(-5px);
-      }
-    }
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  color: white;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+.page-gameover h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+}
+
+.page-gameover ion-button {
+  --background: linear-gradient(90deg, #ff5722, #ff8a50);
+  --background-activated: #d84315;
+  --color: white;
+  font-size: 1.2rem;
+  padding: 1rem 2.5rem;
+  border-radius: 30px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+ion-content {
+  --background: url('/assets/icon/mario.jpg') no-repeat center center / cover;
+  background: transparent;
+  overflow: hidden;
+}
+.page-gameover ion-button:hover {
+  transform: translateY(-5px);
+}

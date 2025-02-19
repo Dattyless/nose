@@ -1,12 +1,15 @@
 <ion-content id="fondo">
   <div class="contenedor-principal">
     <div class="contenido">
+
+      <!-- Mostrar la pregunta -->
       @if (preguntaActual?.texto) {
         <div class="pregunta-container">
           <h2><p>{{ preguntaActual.texto }}</p></h2>
         </div>
       }
 
+      <!-- Opciones de respuesta -->
       @if (preguntaActual?.opciones) {
         <div class="opciones-container">
           <ion-radio-group [(ngModel)]="seleccion">
@@ -19,27 +22,32 @@
           </ion-radio-group>
         </div>
       }
-      
+
+      <!-- Botón de respuesta -->
       <div class="boton-container">
         <ion-button class="boton-bonito" expand="block" color="primary" (click)="responder()" [disabled]="!seleccion">
           RESPONDER
         </ion-button>
       </div>
 
+      <!-- Estado del juego -->
       <div class="estado-juego">
         <p>Vidas <ion-icon name="arrow-forward-outline"></ion-icon> {{ vidasRestantes }} <ion-icon name="heart-outline"></ion-icon></p>
       </div>
     </div>
 
+    <!-- Monstruo y barra de progreso -->
     <div class="monstruo-container">
       <img src="/assets/icon/monstruo.png" alt="monstruo">
       <div class="barra-dano-container">
         <div class="barra-dano">
-          <div class="barra-progreso" [style.width]="((progresoVisual / 5) * 100) + '%'"></div>
+          <div class="barra-progreso" [style.width]="((progresoVisual / 5) * 100) + '%'" ></div>
         </div>
       </div>
     </div>
   </div>
 
-  <ion-button class="log-out-btn" (click)="logout()">Log out</ion-button> 
+
+  <!-- Botón de cerrar sesión -->
+  <ion-button class="log-out-btn" (click)="logout()">Log out</ion-button>
 </ion-content>

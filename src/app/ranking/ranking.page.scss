@@ -1,0 +1,67 @@
+.ranking-content {
+    --background: linear-gradient(135deg, #3d3518, #442d12);
+    color: white;
+    text-align: center;
+}
+
+#fondo {
+    --background: url('/assets/icon/x.jpg') no-repeat center center / cover;
+}
+
+.ranking-list {
+    margin: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ranking-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background 0.3s;
+}
+
+.ranking-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.ranking-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.ranking-points {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Estilo mejorado para el botón */
+.ranking-button {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    padding: 12px 25px;
+    background: linear-gradient(45deg, #FF7A00, #FF3E00); /* Un bonito gradiente naranja */
+    color: white;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s, transform 0.3s;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+.ranking-button:hover {
+    background: linear-gradient(45deg, #FF3E00, #FF7A00); /* Gradiente inverso en hover */
+    transform: scale(1.05); /* Le da un efecto de agrandarse */
+}
+
+.ranking-button:focus {
+    outline: none; /* Elimina el borde de enfoque que aparece en algunos navegadores */
+}
+
+.ranking-button:active {
+    transform: scale(1); /* Reduce el tamaño al hacer clic */
+}

@@ -43,13 +43,22 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./login/login.page').then( m => m.LoginPage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'dificil',
-    loadComponent: () => import('./dificil/dificil.page').then( m => m.DificilPage)
+    loadComponent: () => import('./dificil/dificil.page').then( m => m.DificilPage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'facil',
-    loadComponent: () => import('./facil/facil.page').then( m => m.FacilPage)
+    loadComponent: () => import('./facil/facil.page').then( m => m.FacilPage),
+    canActivate: [AuthGuard]
   },
+  {
+    path: 'ranking',
+    loadComponent: () => import('./ranking/ranking.page').then( m => m.RankingPage),
+    canActivate: [AuthGuard]
+  },
+
 ];

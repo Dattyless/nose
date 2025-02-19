@@ -21,11 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 export class AppComponent {
   public appPages = [
     { title: 'Home', url: '/home', icon: 'home' },
-    { title: 'Niveles', url: '/dificultad', icon: 'danger' },
-    { title: 'game over', url: '/gameover', icon: 'danger' },
-    { title: 'game won', url: '/gamewon', icon: 'danger' },
-    { title: 'principio', url: '/principio', icon: 'danger' },
-    { title: 'preguntas', url: '/preguntas', icon: 'danger' },
+
 
 
 

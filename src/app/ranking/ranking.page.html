@@ -1,0 +1,15 @@
+<ion-content class="ranking-content" id="fondo">
+    <!-- Lista de usuarios -->
+    <ion-list class="ranking-list">
+      <ion-item *ngFor="let usuario of ranking; let i = index" class="ranking-item">
+        <ion-label>
+          <h2 class="ranking-name">{{ i + 1 }}. {{ usuario.name }}</h2>
+          <p class="ranking-points">{{ usuario.puntos }} puntos</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  
+    <ion-button expand="block" (click)="volver()" class="ranking-button">
+      Volver al Inicio
+    </ion-button>
+</ion-content>

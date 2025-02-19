@@ -2,43 +2,51 @@
   <div class="contenedor-principal">
     <div class="contenido">
 
+      <!-- Mostrar la pregunta -->
       @if (preguntaActual?.texto) {
         <div class="pregunta-container">
           <h2><p>{{ preguntaActual.texto }}</p></h2>
         </div>
       }
 
-      @if (preguntaActual?.opciones && preguntaActual.opciones.length > 0) {
+      <!-- Opciones de respuesta -->
+      @if (preguntaActual?.opciones) {
         <div class="opciones-container">
           <ion-radio-group [(ngModel)]="seleccion">
-            <ion-item *ngFor="let opcion of preguntaActual.opciones; trackBy: trackOpcion">
-              <ion-label>{{ opcion }}</ion-label>
-              <ion-radio slot="start" [value]="opcion"></ion-radio>
-            </ion-item>
+            @for (opcion of preguntaActual.opciones; track opcion) {
+              <ion-item class="opcion-item">
+                <ion-label>{{ opcion }}</ion-label>
+                <ion-radio slot="start" [value]="opcion"></ion-radio>
+              </ion-item>
+            }
           </ion-radio-group>
         </div>
       }
 
+      <!-- Botón de respuesta -->
       <div class="boton-container">
         <ion-button class="boton-bonito" expand="block" color="primary" (click)="responder()" [disabled]="!seleccion">
           RESPONDER
         </ion-button>
       </div>
 
+      <!-- Estado del juego -->
       <div class="estado-juego">
         <p>Vidas <ion-icon name="arrow-forward-outline"></ion-icon> {{ vidasRestantes }} <ion-icon name="heart-outline"></ion-icon></p>
       </div>
     </div>
 
+    <!-- Monstruo y barra de progreso -->
     <div class="monstruo-container">
       <img src="/assets/icon/pauby.png" alt="monstruo">
       <div class="barra-dano-container">
         <div class="barra-dano">
-          <div class="barra-progreso" [style.width]="((progresoVisual / 7) * 100) + '%'"></div>
+          <div class="barra-progreso" [style.width]="((progresoVisual / 6) * 100) + '%'" ></div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Botón de cerrar sesión -->
   <ion-button class="log-out-btn" (click)="logout()">Log out</ion-button>
 </ion-content>
