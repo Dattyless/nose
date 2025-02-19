@@ -6,7 +6,7 @@ ion-menu {
   }
   .menu-toolbar {
     --background: #222;
-    color: #005f9e;
+    color: #161616;
     font-weight: bold;
   }
   .menu-toolbar-small {
@@ -21,6 +21,12 @@ ion-menu {
     font-weight: bold;
     color: #57009e;
     padding: 8px 15px;
+  }
+  ion-fab-button::part(native) {
+    background-color: #313233;
+    border-radius: 15px;
+    box-shadow: 8px 8px 8px 8px rgba(0, 0, 0, 0.3), 7px 7px 7px 7px rgba(0, 0, 0, 0.15);
+    color: black;
   }
   .menu-item {
     transition: 0.3s;

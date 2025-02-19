@@ -1,46 +1,19 @@
-<ion-menu contentId="main-content" type="overlay">
-  <ion-header>
-    <ion-toolbar class="menu-toolbar menu-toolbar-small">
-      <ion-title>📁 MENU</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="menu-content">
-    <ion-list id="menu-list">
-      <ion-list-header class="menu-header">
-        <ion-label>👾 Monsterland</ion-label>
-      </ion-list-header>
-      
+<ion-content class="ion-padding">
+  <ion-fab slot="fixed" vertical="top" horizontal="start">
+    <ion-fab-button>
+      <ion-icon name="chevron-forward-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="end">
       @for (p of appPages; track p; let i = $index) {
-        <ion-menu-toggle auto-hide="true">
-          <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="true" routerLinkActive="selected" class="menu-item">
-            <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'" class="menu-icon"></ion-icon>
-            <ion-label>{{ p.title }}</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
+        <ion-fab-button [routerLink]="[p.url]" routerDirection="root">
+          <ion-icon [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+        </ion-fab-button>
       }
-      
-      <!-- Changed menu item to point to the '/ranking' route -->
-      <ion-menu-toggle auto-hide="true">
-        <ion-item routerDirection="root" [routerLink]="['/ranking']" lines="none" detail="true" routerLinkActive="selected" class="menu-item">
-          <ion-icon name="bar-chart-outline" slot="start" class="menu-icon"></ion-icon>
-          <ion-label>Ranking</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-    </ion-list>
-  </ion-content>
-</ion-menu>
+      <ion-fab-button [routerLink]="['/ranking']" routerDirection="root">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 
-<div class="ion-page" id="main-content">
-  <ion-header>
-    <ion-toolbar class="menu-toolbar menu-toolbar-small">
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>📁 MENU</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="ion-padding">
-    <ion-router-outlet id="main-content"></ion-router-outlet>
-  </ion-content>
-</div>
-
+  <ion-router-outlet></ion-router-outlet>
+</ion-content>

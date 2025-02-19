@@ -4,7 +4,7 @@ import { addIcons } from 'ionicons';
 import * as icons from 'ionicons/icons';
 import { IonContent, IonHeader, IonToolbar, IonTitle,
   IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
-  IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonButton, IonRadioGroup, IonRadio, IonItem } from '@ionic/angular/standalone';
+  IonMenuButton, IonMenuToggle, IonFab, IonFabButton, IonFabList, IonListHeader, IonButtons, IonButton, IonRadioGroup, IonRadio, IonItem } from '@ionic/angular/standalone';
   import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -14,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  imports: [IonContent, IonHeader, IonToolbar, IonTitle,
+  imports: [IonFab, IonFabButton, IonFabList,IonContent, IonHeader, IonToolbar, IonTitle,
     IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
     IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonButton, IonRadioGroup, IonRadio, IonItem, FormsModule, HttpClientModule, RouterLink, RouterLinkActive],
 })
