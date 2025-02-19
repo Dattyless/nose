@@ -92,8 +92,8 @@ export class HomePage implements OnInit {
     this.router.navigate(['/dificultad']);
   }
 
-  // Cerrar sesión y redirigir a la página de inicio de Auth0
   exit() {
     console.log('Saliendo de la aplicación');
+    window.location.href = 'https://www.doctoralia.es/psicologo/palma-de-mallorca'; 
   }
 }
